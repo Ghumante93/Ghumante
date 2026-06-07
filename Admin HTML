@@ -1,50 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GHUMANTE Admin Panel</title>
-    <meta charset="UTF-8">
+  <title>GHUMANTE Admin Panel</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .box {
+      background: white;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px #ccc;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+    }
+    button {
+      padding: 10px;
+      background: green;
+      color: white;
+      border: none;
+      width: 100%;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
 
-    <h1>GHUMANTE Admin Panel</h1>
+<h1>GHUMANTE Admin Panel</h1>
 
-    <form id="hotelForm">
+<!-- HOTEL -->
+<div class="box">
+  <h2>Add Hotel</h2>
+  <input id="hotelName" placeholder="Hotel Name">
+  <input id="hotelLocation" placeholder="Location">
+  <input id="hotelImage" placeholder="Image URL">
+  <button onclick="addHotel()">Add Hotel</button>
+</div>
 
-        <input
-            type="text"
-            id="hotelName"
-            placeholder="Hotel Name"
-            required
-        >
+<!-- HOMESTAY -->
+<div class="box">
+  <h2>Add Homestay</h2>
+  <input id="homeName" placeholder="Homestay Name">
+  <input id="homeLocation" placeholder="Location">
+  <input id="homeImage" placeholder="Image URL">
+  <button onclick="addHomestay()">Add Homestay</button>
+</div>
 
-        <br><br>
+<!-- PACKAGE -->
+<div class="box">
+  <h2>Add Package</h2>
+  <input id="packageName" placeholder="Package Name">
+  <input id="packagePrice" placeholder="Price">
+  <input id="packageImage" placeholder="Image URL">
+  <button onclick="addPackage()">Add Package</button>
+</div>
 
-        <input
-            type="text"
-            id="location"
-            placeholder="Location"
-            required
-        >
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
-        <br><br>
+<script src="firebase.js"></script>
 
-        <input
-            type="text"
-            id="price"
-            placeholder="Price"
-            required
-        >
+<script>
+function addHotel() {
+  db.ref("hotels").push({
+    name: hotelName.value,
+    location: hotelLocation.value,
+    image: hotelImage.value
+  });
+  alert("Hotel Added");
+}
 
-        <br><br>
+function addHomestay() {
+  db.ref("homestays").push({
+    name: homeName.value,
+    location: homeLocation.value,
+    image: homeImage.value
+  });
+  alert("Homestay Added");
+}
 
-        <button type="submit">
-            Add Hotel
-        </button>
-
-    </form>
-
-    <script type="module" src="./admin.js"></script>
+function addPackage() {
+  db.ref("packages").push({
+    name: packageName.value,
+    price: packagePrice.value,
+    image: packageImage.value
+  });
+  alert("Package Added");
+}
+</script>
 
 </body>
 </html>
