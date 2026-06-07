@@ -2,39 +2,49 @@
 <html>
 <head>
     <title>GHUMANTE Admin Panel</title>
+    <meta charset="UTF-8">
 </head>
+
 <body>
 
-<h1>GHUMANTE Admin Panel</h1>
+    <h1>GHUMANTE Admin Panel</h1>
 
-<form id="hotelForm">
+    <form id="hotelForm">
 
-    <input
-        type="text"
-        id="hotelName"
-        placeholder="Hotel Name"
-        required
-    >
+        <input
+            type="text"
+            id="hotelName"
+            placeholder="Hotel Name"
+            required
+        >
 
-    <input
-        type="text"
-        id="location"
-        placeholder="Location"
-        required
-    >
+        <br><br>
 
-    <input
-        type="text"
-        id="price"
-        placeholder="Price"
-        required
-    >
+        <input
+            type="text"
+            id="location"
+            placeholder="Location"
+            required
+        >
 
-    <button type="submit">
-        Add Hotel
-    </button>
+        <br><br>
 
-</form>
+        <input
+            type="text"
+            id="price"
+            placeholder="Price"
+            required
+        >
+
+        <br><br>
+
+        <button type="submit">
+            Add Hotel
+        </button>
+
+    </form>
+
+    <script type="module" src="./admin.js"></script>
 
 </body>
 </html>
