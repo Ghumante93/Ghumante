@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GHUMANTE | North Bengal Travel & Tourism</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f4f7f6;
+    color:#222;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    background:#0f3d2e;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 20px;
+    z-index:1000;
+}
+
+nav h2{
+    color:white;
+    letter-spacing:2px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 10px;
+    font-size:14px;
+}
+
+nav a:hover{
+    color:#ffd369;
+}
+
+/* HERO */
+header{
+    height:95vh;
+    background:
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    padding:20px;
+}
+
+header h1{
+    font-size:60px;
+    letter-spacing:3px;
+}
+
+header p{
+    font-size:20px;
+    margin-top:10px;
+}
+
+/* BUTTON */
+.btn{
+    margin-top:20px;
+    padding:12px 28px;
+    border:none;
+    border-radius:30px;
+    background:#ffb703;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* SECTION */
+section{
+    max-width:1200px;
+    margin:auto;
+    padding:70px 20px;
+}
+
+section h2{
+    text-align:center;
+    margin-bottom:35px;
+    color:#0f3d2e;
+    font-size:34px;
+}
+
+/* CARDS */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+}
+
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:15px;
+}
+
+.price{
+    color:#ff6b00;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+/* CONTACT */
+.contact{
+    background:#0f3d2e;
+    color:white;
+    text-align:center;
+    padding:60px 20px;
+}
+
+.contact a{
+    color:#ffd369;
+}
+
+/* WHATSAPP */
+.whatsapp{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#25D366;
+    color:white;
+    padding:14px;
+    border-radius:50px;
+    text-decoration:none;
+}
+
+/* FOOTER */
+footer{
+    background:#081f18;
+    color:white;
+    text-align:center;
+    padding:15px;
+    font-size:13px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+header h1{font-size:38px;}
+nav{flex-direction:column;}
+nav a{font-size:12px;}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+<h2>GHUMANTE</h2>
+<div>
+<a href="#homestays">Stays</a>
+<a href="#hotels">Hotels</a>
+<a href="#transport">Transport</a>
+<a href="#tours">Tours</a>
+<a href="#packages">Packages</a>
+<a href="#contact">Contact</a>
+</div>
+</nav>
+
+<!-- HERO -->
+<header>
+<h1>GHUMANTE</h1>
+<p>North Bengal Travel • Safaris • Toy Train • Adventures</p>
+<button class="btn">Explore Now</button>
+</header>
+
+<!-- ABOUT -->
+<section>
+<h2>About Us</h2>
+<p style="text-align:center; max-width:800px; margin:auto;">
+We provide complete North Bengal travel experiences including jungle safaris, toy train journeys, hill stations, rivers, and adventure tours with trusted local service.
+</p>
+</section>
+
+<!-- HOMESTAYS -->
+<section id="homestays">
+<h2>Homestays</h2>
+<div class="cards">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200">
+<div class="card-content">
+<h3>Samsing Stay</h3>
+<p>Tea gardens & hills</p>
+<p class="price">₹2500/night</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200">
+<div class="card-content">
+<h3>Lava Pine Stay</h3>
+<p>Forest & valley view</p>
+<p class="price">₹3200/night</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- HOTELS -->
+<section id="hotels">
+<h2>Hotels</h2>
+<div class="cards">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200">
+<div class="card-content">
+<h3>Kalimpong Hotel</h3>
+<p>Mountain view stay</p>
+<p class="price">₹4200/night</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- TRANSPORT -->
+<section id="transport">
+<h2>Transport</h2>
+<div class="cards">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1549921296-3a6b8d1a2b3d?q=80&w=1200">
+<div class="card-content">
+<h3>Airport Transfer</h3>
+<p>Bagdogra pickup</p>
+<p class="price">From ₹2500</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1200">
+<div class="card-content">
+<h3>NJP Pickup</h3>
+<p>Railway station service</p>
+<p class="price">From ₹1800</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- TOURS -->
+<section id="tours">
+<h2>Tours</h2>
+<div class="cards">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200">
+<div class="card-content">
+<h3>Dooars Safari</h3>
+<p>Jungle + river + wildlife</p>
+<p class="price">₹3500/day</p>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200">
+<div class="card-content">
+<h3>Toy Train Ride</h3>
+<p>NJP–Darjeeling heritage</p>
+<p class="price">₹1000–₹1500</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages">
+<h2>Travel Packages</h2>
+<div class="cards">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=80&w=1200">
+<div class="card-content">
+<h3>🐘 Jungle Safari Package</h3>
+<p>Gorumara + Murti + forest stay</p>
+<p class="price">₹4500–₹6500</p>
+<a href="https://wa.me/918250229926?text=I%20want%20Jungle%20Safari%20Package">Book Now</a>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200">
+<div class="card-content">
+<h3>🚂 Toy Train Package</h3>
+<p>NJP–Darjeeling + hill stay</p>
+<p class="price">₹5000–₹8000</p>
+<a href="https://wa.me/918250229926?text=I%20want%20Toy%20Train%20Package">Book Now</a>
+</div>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200">
+<div class="card-content">
+<h3>🏔️ Hill Explorer</h3>
+<p>Lava + Lolegaon + Kalimpong</p>
+<p class="price">₹5500–₹8500</p>
+<a href="https://wa.me/918250229926?text=I%20want%20Hill%20Package">Book Now</a>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+<h2>Contact Us</h2>
+<p>📞 +91-8250229926</p>
+<p>📧 rohitbhujel6@gmail.com</p>
+<p><a href="https://wa.me/918250229926">WhatsApp Us</a></p>
+</section>
+
+<!-- WHATSAPP -->
+<a class="whatsapp" href="https://wa.me/918250229926">WhatsApp</a>
+
+<!-- FOOTER -->
+<footer>
+© 2025 GHUMANTE | North Bengal Travel Company
+</footer>
+
+</body>
+</html>
