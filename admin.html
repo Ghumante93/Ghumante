@@ -1,60 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>GHUMANTE Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GHUMANTE Admin Dashboard</title>
 
 <style>
-body{
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 font-family:Arial,sans-serif;
-background:#f4f4f4;
+}
+
+body{
+background:#f4f6f9;
+}
+
+header{
+background:#0f172a;
+color:white;
 padding:20px;
+text-align:center;
+}
+
+header h1{
+margin-bottom:5px;
 }
 
 .container{
-max-width:900px;
+max-width:1200px;
 margin:auto;
+padding:20px;
+}
+
+.nav{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.nav button{
+padding:12px 20px;
+border:none;
+background:#0f766e;
+color:white;
+cursor:pointer;
+border-radius:6px;
+}
+
+.nav button:hover{
+background:#115e59;
+}
+
+.section{
+display:none;
+}
+
+.section.active{
+display:block;
 }
 
 .card{
-background:#fff;
+background:white;
 padding:20px;
-margin-bottom:20px;
 border-radius:10px;
+margin-bottom:20px;
 box-shadow:0 2px 10px rgba(0,0,0,.1);
 }
 
-input,textarea{
-width:100%;
-padding:12px;
-margin:8px 0;
-border:1px solid #ccc;
-border-radius:5px;
-box-sizing:border-box;
+.card h2{
+margin-bottom:15px;
 }
 
-button{
+input,
+textarea{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+button.save{
 width:100%;
 padding:12px;
 background:#0f766e;
 color:white;
 border:none;
-border-radius:5px;
-cursor:pointer;
+border-radius:6px;
 font-size:16px;
+cursor:pointer;
 }
 
-button:hover{
+button.save:hover{
 background:#115e59;
 }
+
+@media(max-width:768px){
+
+.nav{
+flex-direction:column;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
+<header>
+<h1>GHUMANTE</h1>
+<p>Travel. Stay. Explore.</p>
+</header>
+
 <div class="container">
 
-<h1>GHUMANTE Admin Dashboard</h1>
+<div class="nav">
+<button onclick="showSection('hotels')">Hotels</button>
+<button onclick="showSection('homestays')">Homestays</button>
+<button onclick="showSection('packages')">Packages</button>
+</div>
+
+<!-- HOTELS -->
+
+<div id="hotels" class="section active">
 
 <div class="card">
 
@@ -70,9 +144,21 @@ background:#115e59;
 
 <input id="hotelImage" placeholder="Image URL">
 
-<button onclick="addHotel()">Add Hotel</button>
+<input id="hotelRating" placeholder="Rating (Example 4.8)">
+
+<input id="hotelAmenities" placeholder="Amenities (WiFi, Pool, Parking etc.)">
+
+<button class="save" onclick="addHotel()">
+Add Hotel
+</button>
 
 </div>
+
+</div>
+
+<!-- HOMESTAYS -->
+
+<div id="homestays" class="section">
 
 <div class="card">
 
@@ -88,9 +174,21 @@ background:#115e59;
 
 <input id="homeImage" placeholder="Image URL">
 
-<button onclick="addHomestay()">Add Homestay</button>
+<input id="homeRating" placeholder="Rating">
+
+<input id="homeAmenities" placeholder="Amenities">
+
+<button class="save" onclick="addHomestay()">
+Add Homestay
+</button>
 
 </div>
+
+</div>
+
+<!-- PACKAGES -->
+
+<div id="packages" class="section">
 
 <div class="card">
 
@@ -102,11 +200,19 @@ background:#115e59;
 
 <input id="packagePrice" placeholder="Price">
 
-<textarea id="packageDescription" placeholder="Package Description"></textarea>
+<textarea id="packageDescription" placeholder="Description"></textarea>
 
 <input id="packageImage" placeholder="Image URL">
 
-<button onclick="addPackage()">Add Package</button>
+<input id="packageDuration" placeholder="Duration (Example: 5 Days / 4 Nights)">
+
+<input id="packageHighlights" placeholder="Highlights">
+
+<button class="save" onclick="addPackage()">
+Add Package
+</button>
+
+</div>
 
 </div>
 
@@ -119,48 +225,70 @@ background:#115e59;
 
 <script>
 
+function showSection(section){
+
+document.querySelectorAll(".section").forEach(s=>{
+s.classList.remove("active");
+});
+
+document.getElementById(section).classList.add("active");
+
+}
+
 function addHotel(){
 
 db.ref("hotels").push({
+
 name: hotelName.value,
 location: hotelLocation.value,
 price: hotelPrice.value,
 description: hotelDescription.value,
 image: hotelImage.value,
+rating: hotelRating.value,
+amenities: hotelAmenities.value,
 createdAt: Date.now()
+
 });
 
-alert("Hotel Added");
+alert("Hotel Added Successfully");
 
 }
 
 function addHomestay(){
 
 db.ref("homestays").push({
+
 name: homeName.value,
 location: homeLocation.value,
 price: homePrice.value,
 description: homeDescription.value,
 image: homeImage.value,
+rating: homeRating.value,
+amenities: homeAmenities.value,
 createdAt: Date.now()
+
 });
 
-alert("Homestay Added");
+alert("Homestay Added Successfully");
 
 }
 
 function addPackage(){
 
 db.ref("packages").push({
+
 name: packageName.value,
 location: packageLocation.value,
 price: packagePrice.value,
 description: packageDescription.value,
 image: packageImage.value,
+duration: packageDuration.value,
+highlights: packageHighlights.value,
 createdAt: Date.now()
+
 });
 
-alert("Package Added");
+alert("Package Added Successfully");
 
 }
 
