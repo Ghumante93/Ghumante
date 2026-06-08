@@ -3,54 +3,65 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>GHUMANTE</title>
 
 <style>
 
-body{
-font-family:Arial,sans-serif;
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
 background:#f4f4f4;
 }
 
 header{
 background:#0f172a;
 color:white;
-padding:20px;
+padding:25px;
 text-align:center;
 }
 
-h2{
-margin-left:20px;
+header p{
+margin-top:8px;
+}
+
+.section-title{
+margin:25px 20px 10px;
 }
 
 .container{
 display:flex;
 flex-wrap:wrap;
-padding:10px;
+gap:20px;
+padding:20px;
 }
 
 .card{
 background:white;
-margin:10px;
-width:280px;
-border-radius:10px;
+width:320px;
+border-radius:12px;
 overflow:hidden;
-box-shadow:0 2px 8px rgba(0,0,0,.15);
+box-shadow:0 2px 10px rgba(0,0,0,.12);
 }
 
 .card img{
 width:100%;
-height:180px;
+height:200px;
 object-fit:cover;
 }
 
 .content{
-padding:12px;
+padding:15px;
 }
 
 .title{
-font-size:18px;
+font-size:20px;
 font-weight:bold;
 margin-bottom:8px;
 }
@@ -58,13 +69,43 @@ margin-bottom:8px;
 .price{
 color:green;
 font-weight:bold;
-margin:8px 0;
+margin:10px 0;
+font-size:18px;
 }
 
 .desc{
-font-size:14px;
+margin-top:10px;
 color:#555;
-margin-top:8px;
+line-height:1.5;
+}
+
+.rating{
+margin-top:10px;
+font-weight:bold;
+color:#f59e0b;
+}
+
+.amenity,
+.highlight{
+margin-top:5px;
+font-size:14px;
+}
+
+.duration{
+margin-top:10px;
+font-weight:bold;
+}
+
+@media(max-width:768px){
+
+.container{
+justify-content:center;
+}
+
+.card{
+width:95%;
+}
+
 }
 
 </style>
@@ -74,16 +115,16 @@ margin-top:8px;
 
 <header>
 <h1>GHUMANTE</h1>
-<p>Explore Nepal Easily</p>
+<p>Travel. Stay. Explore.</p>
 </header>
 
-<h2>Hotels</h2>
+<h2 class="section-title">Hotels</h2>
 <div id="hotels" class="container"></div>
 
-<h2>Homestays</h2>
+<h2 class="section-title">Homestays</h2>
 <div id="homestays" class="container"></div>
 
-<h2>Packages</h2>
+<h2 class="section-title">Packages</h2>
 <div id="packages" class="container"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -93,12 +134,33 @@ margin-top:8px;
 
 <script>
 
+function renderAmenities(text){
+
+if(!text) return "";
+
+return text.split(",")
+.map(item => `<div class="amenity">🏨 ${item.trim()}</div>`)
+.join("");
+
+}
+
+function renderHighlights(text){
+
+if(!text) return "";
+
+return text.split(",")
+.map(item => `<div class="highlight">✨ ${item.trim()}</div>`)
+.join("");
+
+}
+
 function hotelCard(d){
 
 return `
+
 <div class="card">
 
-<img src="${d.image || 'https://picsum.photos/400/300'}">
+<img src="${d.image || 'https://picsum.photos/500/300'}">
 
 <div class="content">
 
@@ -114,6 +176,12 @@ ${d.name || ''}
 ₹ ${d.price || 'N/A'}
 </div>
 
+<div class="rating">
+⭐ ${d.rating || 'N/A'}
+</div>
+
+${renderAmenities(d.amenities)}
+
 <div class="desc">
 ${d.description || ''}
 </div>
@@ -121,6 +189,47 @@ ${d.description || ''}
 </div>
 
 </div>
+
+`;
+
+}
+
+function packageCard(d){
+
+return `
+
+<div class="card">
+
+<img src="${d.image || 'https://picsum.photos/500/300'}">
+
+<div class="content">
+
+<div class="title">
+${d.name || ''}
+</div>
+
+<div>
+📍 ${d.location || ''}
+</div>
+
+<div class="price">
+₹ ${d.price || 'N/A'}
+</div>
+
+<div class="duration">
+🗓 ${d.duration || ''}
+</div>
+
+${renderHighlights(d.highlights)}
+
+<div class="desc">
+${d.description || ''}
+</div>
+
+</div>
+
+</div>
+
 `;
 
 }
@@ -157,7 +266,7 @@ packages.innerHTML="";
 
 snap.forEach(child=>{
 
-packages.innerHTML += hotelCard(child.val());
+packages.innerHTML += packageCard(child.val());
 
 });
 
