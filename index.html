@@ -1,68 +1,80 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>GHUMANTE</title>
+<meta charset="UTF-8">
+<title>GHUMANTE</title>
 
-  <style>
-    body {
-      font-family: Arial;
-      margin: 0;
-      background: #f4f4f4;
-    }
+<style>
 
-    header {
-      background: #0f172a;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+body{
+font-family:Arial,sans-serif;
+margin:0;
+background:#f4f4f4;
+}
 
-    h2 {
-      margin-left: 20px;
-    }
+header{
+background:#0f172a;
+color:white;
+padding:20px;
+text-align:center;
+}
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 10px;
-    }
+h2{
+margin-left:20px;
+}
 
-    .card {
-      background: white;
-      margin: 10px;
-      width: 250px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 5px #ccc;
-    }
+.container{
+display:flex;
+flex-wrap:wrap;
+padding:10px;
+}
 
-    .card img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-    }
+.card{
+background:white;
+margin:10px;
+width:280px;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
 
-    .card .content {
-      padding: 10px;
-    }
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
 
-    .title {
-      font-weight: bold;
-    }
+.content{
+padding:12px;
+}
 
-    .price {
-      color: green;
-      margin-top: 5px;
-    }
-  </style>
+.title{
+font-size:18px;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+.price{
+color:green;
+font-weight:bold;
+margin:8px 0;
+}
+
+.desc{
+font-size:14px;
+color:#555;
+margin-top:8px;
+}
+
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>GHUMANTE</h1>
-  <p>Explore Nepal Easily</p>
+<h1>GHUMANTE</h1>
+<p>Explore Nepal Easily</p>
 </header>
 
 <h2>Hotels</h2>
@@ -74,71 +86,89 @@
 <h2>Packages</h2>
 <div id="packages" class="container"></div>
 
-<!-- Firebase CDN -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
-<!-- Firebase Config -->
 <script src="firebase.js"></script>
 
 <script>
-function loadData() {
 
-  // HOTELS
-  db.ref("hotels").on("value", (snap) => {
-    hotels.innerHTML = "";
-    snap.forEach(child => {
-      let d = child.val();
-      hotels.innerHTML += `
-        <div class="card">
-          <img src="${d.image}">
-          <div class="content">
-            <div class="title">${d.name}</div>
-            <div>${d.location}</div>
-          </div>
-        </div>
-      `;
-    });
-  });
+function hotelCard(d){
 
-  // HOMESTAYS
-  db.ref("homestays").on("value", (snap) => {
-    homestays.innerHTML = "";
-    snap.forEach(child => {
-      let d = child.val();
-      homestays.innerHTML += `
-        <div class="card">
-          <img src="${d.image}">
-          <div class="content">
-            <div class="title">${d.name}</div>
-            <div>${d.location}</div>
-          </div>
-        </div>
-      `;
-    });
-  });
+return `
+<div class="card">
 
-  // PACKAGES
-  db.ref("packages").on("value", (snap) => {
-    packages.innerHTML = "";
-    snap.forEach(child => {
-      let d = child.val();
-      packages.innerHTML += `
-        <div class="card">
-          <img src="${d.image}">
-          <div class="content">
-            <div class="title">${d.name}</div>
-            <div class="price">Rs ${d.price}</div>
-          </div>
-        </div>
-      `;
-    });
-  });
+<img src="${d.image || 'https://picsum.photos/400/300'}">
+
+<div class="content">
+
+<div class="title">
+${d.name || ''}
+</div>
+
+<div>
+📍 ${d.location || ''}
+</div>
+
+<div class="price">
+₹ ${d.price || 'N/A'}
+</div>
+
+<div class="desc">
+${d.description || ''}
+</div>
+
+</div>
+
+</div>
+`;
+
+}
+
+function loadData(){
+
+db.ref("hotels").on("value",(snap)=>{
+
+hotels.innerHTML="";
+
+snap.forEach(child=>{
+
+hotels.innerHTML += hotelCard(child.val());
+
+});
+
+});
+
+db.ref("homestays").on("value",(snap)=>{
+
+homestays.innerHTML="";
+
+snap.forEach(child=>{
+
+homestays.innerHTML += hotelCard(child.val());
+
+});
+
+});
+
+db.ref("packages").on("value",(snap)=>{
+
+packages.innerHTML="";
+
+snap.forEach(child=>{
+
+packages.innerHTML += hotelCard(child.val());
+
+});
+
+});
 
 }
 
 loadData();
+
 </script>
 
 </body>
 </html>
+```
