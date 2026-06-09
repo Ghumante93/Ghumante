@@ -129,6 +129,22 @@ border-radius:8px;
 background:#115e59;
 }
 
+.inquiry-btn{
+width:100%;
+margin-top:10px;
+padding:12px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:15px;
+}
+
+.inquiry-btn:hover{
+background:#1d4ed8;
+}
+
 .badge{
 display:inline-block;
 background:#e2e8f0;
@@ -136,6 +152,39 @@ padding:4px 10px;
 border-radius:20px;
 font-size:12px;
 margin-bottom:10px;
+}
+
+.modal{
+display:none;
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.6);
+z-index:9999;
+}
+
+.modal-content{
+background:white;
+width:90%;
+max-width:500px;
+margin:50px auto;
+padding:20px;
+border-radius:10px;
+}
+
+.modal-content input,
+.modal-content textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+}
+
+.close-btn{
+float:right;
+font-size:25px;
+cursor:pointer;
 }
 
 @media(max-width:768px){
@@ -199,6 +248,9 @@ placeholder="Search destination, hotel, package..."
 <script>
 
 let allListings = [];
+let inquiryListingId = "";
+let inquiryListingName = "";
+let inquiryListingType = "";
 
 function renderAmenities(text){
 
@@ -218,9 +270,7 @@ return text.split(",")
 .map(item => `<div class="highlight">✨ ${item.trim()}</div>`)
 .join("");
 
-}
-
-function createCard(item){
+}function createCard(item){
 
 let extra = "";
 
@@ -282,6 +332,17 @@ href="details.html?id=${item.id}&type=${item.type}"
 >
 View Details
 </a>
+
+<button
+class="inquiry-btn"
+onclick="openInquiryModal(
+'${item.id}',
+'${item.name}',
+'${item.type}'
+)"
+>
+Send Inquiry
+</button>
 
 </div>
 
@@ -345,6 +406,73 @@ results.innerHTML += createCard(item);
 
 });
 
+}function openInquiryModal(id,name,type){
+
+inquiryListingId=id;
+inquiryListingName=name;
+inquiryListingType=type;
+
+document.getElementById("inquiryModal")
+.style.display="block";
+
+}
+
+function closeInquiryModal(){
+
+document.getElementById("inquiryModal")
+.style.display="none";
+
+}
+
+function submitInquiry(){
+
+const inquiry={
+
+listingId: inquiryListingId,
+listingName: inquiryListingName,
+listingType: inquiryListingType,
+
+customerName:
+document.getElementById("inqName").value,
+
+phone:
+document.getElementById("inqPhone").value,
+
+email:
+document.getElementById("inqEmail").value,
+
+travelDate:
+document.getElementById("inqTravelDate").value,
+
+guests:
+document.getElementById("inqGuests").value,
+
+message:
+document.getElementById("inqMessage").value,
+
+status:"Pending",
+
+createdAt: Date.now()
+
+};
+
+db.ref("inquiries")
+.push(inquiry)
+.then(()=>{
+
+alert("Inquiry Submitted Successfully");
+
+closeInquiryModal();
+
+document.getElementById("inqName").value="";
+document.getElementById("inqPhone").value="";
+document.getElementById("inqEmail").value="";
+document.getElementById("inqTravelDate").value="";
+document.getElementById("inqGuests").value="";
+document.getElementById("inqMessage").value="";
+
+});
+
 }
 
 function loadCategory(path){
@@ -359,9 +487,7 @@ snap.forEach(child=>{
 allListings.push({
 
 id: child.key,
-
 type: path,
-
 ...child.val()
 
 });
@@ -387,6 +513,38 @@ document
 .addEventListener("change",renderListings);
 
 </script>
+
+<div id="inquiryModal" class="modal">
+
+<div class="modal-content">
+
+<span class="close-btn"
+onclick="closeInquiryModal()">
+×
+</span>
+
+<h2>Send Inquiry</h2>
+
+<input type="text" id="inqName" placeholder="Your Name">
+<input type="tel" id="inqPhone" placeholder="Phone Number">
+<input type="email" id="inqEmail" placeholder="Email Address">
+<input type="date" id="inqTravelDate">
+<input type="number" id="inqGuests" placeholder="Number of Guests">
+
+<textarea
+id="inqMessage"
+placeholder="Tell us your travel requirements">
+</textarea>
+
+<button
+class="inquiry-btn"
+onclick="submitInquiry()">
+Submit Inquiry
+</button>
+
+</div>
+
+</div>
 
 </body>
 </html>
