@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GHUMANTE Admin V3</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f4f6f9;
+}
+
+header{
+background:#0f172a;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.stat-card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+text-align:center;
+}
+
+.stat-card h3{
+color:#555;
+margin-bottom:10px;
+}
+
+.stat-card p{
+font-size:28px;
+font-weight:bold;
+color:#0f766e;
+}
+
+.nav{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-bottom:20px;
+}
+
+.nav button{
+background:#0f766e;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:8px;
+cursor:pointer;
+}
+
+.nav button:hover{
+background:#115e59;
+}
+
+.section{
+display:none;
+}
+
+.section.active{
+display:block;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 2px 10px rgba(0,0,0,.08);
+margin-bottom:20px;
+}
+
+.card h2{
+margin-bottom:15px;
+}
+
+input,
+textarea,
+select{
+width:100%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+margin-bottom:12px;
+}
+
+textarea{
+min-height:120px;
+resize:vertical;
+}
+
+.save-btn{
+width:100%;
+background:#0f766e;
+color:white;
+border:none;
+padding:14px;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+}
+
+.save-btn:hover{
+background:#115e59;
+}
+
+.manager-filters{
+display:grid;
+grid-template-columns:2fr 1fr 1fr;
+gap:10px;
+margin-bottom:15px;
+}
+
+.listing{
+border:1px solid #ddd;
+padding:15px;
+border-radius:10px;
+margin-bottom:12px;
+background:#fafafa;
+}
+
+.edit-btn{
+background:#2563eb;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:6px;
+cursor:pointer;
+margin-right:8px;
+}
+
+.delete-btn{
+background:#dc2626;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.featured-badge{
+display:inline-block;
+background:gold;
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+margin-top:8px;
+}
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.5);
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.modal-content{
+background:white;
+padding:20px;
+border-radius:12px;
+width:90%;
+max-width:650px;
+max-height:90vh;
+overflow:auto;
+}
+
+@media(max-width:768px){
+
+.manager-filters{
+grid-template-columns:1fr;
+}
+
+.nav{
+flex-direction:column;
+}
+
+.nav button{
+width:100%;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>GHUMANTE Admin Dashboard V3</h1>
+<p>Travel • Stay • Explore</p>
+
+</header>
+
+<div class="container">
+
+<div class="stats">
+
+<div class="stat-card">
+<h3>Hotels</h3>
+<p id="hotelCount">0</p>
+</div>
+
+<div class="stat-card">
+<h3>Homestays</h3>
+<p id="homestayCount">0</p>
+</div>
+
+<div class="stat-card">
+<h3>Packages</h3>
+<p id="packageCount">0</p>
+</div>
+
+<div class="stat-card">
+<h3>Total Listings</h3>
+<p id="totalCount">0</p>
+</div>
+
+<div class="stat-card">
+<h3>Total Leads</h3>
+<p id="leadCount">0</p>
+</div>
+
+</div>
+
+<div class="nav">
+
+<button onclick="showSection('hotels')">Hotels</button>
+
+<button onclick="showSection('homestays')">
+Homestays
+</button>
+
+<button onclick="showSection('packages')">
+Packages
+</button>
+
+<button onclick="showSection('manager')">
+Listings Manager
+</button>
+
+<button onclick="showSection('leads')">
+Leads
+</button>
+
+</div><!-- HOTELS -->
+
+<div id="hotels" class="section active">
+
+<div class="card">
+
+<h2>Add Hotel</h2>
+
+<input id="hotelName" placeholder="Hotel Name">
+
+<input id="hotelLocation" placeholder="Location">
+
+<input id="hotelPrice" placeholder="Price">
+
+<textarea
+id="hotelDescription"
+placeholder="Description"></textarea>
+
+<input
+id="hotelImage"
+placeholder="Image URL">
+
+<input
+id="hotelRating"
+placeholder="Rating">
+
+<input
+id="hotelAmenities"
+placeholder="Amenities (comma separated)">
+
+<select id="hotelFeatured">
+
+<option value="false">
+Featured: No
+</option>
+
+<option value="true">
+Featured: Yes
+</option>
+
+</select>
+
+<button
+class="save-btn"
+onclick="addHotel()">
+
+Add Hotel
+
+</button>
+
+</div>
+
+</div>
+
+<!-- HOMESTAYS -->
+
+<div id="homestays" class="section">
+
+<div class="card">
+
+<h2>Add Homestay</h2>
+
+<input
+id="homeName"
+placeholder="Homestay Name">
+
+<input
+id="homeLocation"
+placeholder="Location">
+
+<input
+id="homePrice"
+placeholder="Price">
+
+<textarea
+id="homeDescription"
+placeholder="Description"></textarea>
+
+<input
+id="homeImage"
+placeholder="Image URL">
+
+<input
+id="homeRating"
+placeholder="Rating">
+
+<input
+id="homeAmenities"
+placeholder="Amenities (comma separated)">
+
+<select id="homeFeatured">
+
+<option value="false">
+Featured: No
+</option>
+
+<option value="true">
+Featured: Yes
+</option>
+
+</select>
+
+<button
+class="save-btn"
+onclick="addHomestay()">
+
+Add Homestay
+
+</button>
+
+</div>
+
+</div><!-- PACKAGES -->
+
+<div id="packages" class="section">
+
+<div class="card">
+
+<h2>Add Package</h2>
+
+<input
+id="packageName"
+placeholder="Package Name">
+
+<input
+id="packageLocation"
+placeholder="Destination">
+
+<input
+id="packagePrice"
+placeholder="Price">
+
+<textarea
+id="packageDescription"
+placeholder="Description"></textarea>
+
+<input
+id="packageImage"
+placeholder="Image URL">
+
+<input
+id="packageDuration"
+placeholder="Duration (e.g. 5 Days / 4 Nights)">
+
+<textarea
+id="packageHighlights"
+placeholder="Highlights (comma separated)"></textarea>
+
+<select id="packageFeatured">
+
+<option value="false">
+Featured: No
+</option>
+
+<option value="true">
+Featured: Yes
+</option>
+
+</select>
+
+<button
+class="save-btn"
+onclick="addPackage()">
+
+Add Package
+
+</button>
+
+</div>
+
+</div>
+
+<!-- LISTINGS MANAGER -->
+
+<div id="manager" class="section">
+
+<div class="card">
+
+<h2>Listings Manager</h2>
+
+<div class="manager-filters">
+
+<input
+id="searchInput"
+placeholder="Search listings..."
+onkeyup="renderManager()">
+
+<select
+id="categoryFilter"
+onchange="renderManager()">
+
+<option value="all">
+All Categories
+</option>
+
+<option value="hotels">
+Hotels
+</option>
+
+<option value="homestays">
+Homestays
+</option>
+
+<option value="packages">
+Packages
+</option>
+
+</select>
+
+<select
+id="featuredFilter"
+onchange="renderManager()">
+
+<option value="all">
+All Listings
+</option>
+
+<option value="featured">
+Featured Only
+</option>
+
+</select>
+
+</div>
+
+<div id="listingContainer">
+
+Loading Listings...
+
+</div>
+
+</div>
+
+</div><!-- LEADS DASHBOARD -->
+
+<div id="leads" class="section">
+
+<div class="card">
+
+<h2>Lead Management</h2>
+
+<input
+id="leadSearch"
+placeholder="Search customer, phone, email, listing..."
+onkeyup="renderLeads()">
+
+<select
+id="leadStatusFilter"
+onchange="renderLeads()">
+
+<option value="all">
+All Status
+</option>
+
+<option value="Pending">
+Pending
+</option>
+
+<option value="Contacted">
+Contacted
+</option>
+
+<option value="Closed">
+Closed
+</option>
+
+</select>
+
+<div id="leadContainer">
+
+Loading Leads...
+
+</div>
+
+</div>
+
+</div>
+
+<!-- EDIT MODAL -->
+
+<div class="modal" id="editModal">
+
+<div class="modal-content">
+
+<h2>Edit Listing</h2>
+
+<input
+id="editName"
+placeholder="Name">
+
+<input
+id="editLocation"
+placeholder="Location">
+
+<input
+id="editPrice"
+placeholder="Price">
+
+<textarea
+id="editDescription"
+placeholder="Description"></textarea>
+
+<input
+id="editImage"
+placeholder="Image URL">
+
+<input
+id="editExtra1"
+placeholder="Rating / Duration">
+
+<textarea
+id="editExtra2"
+placeholder="Amenities / Highlights"></textarea>
+
+<select id="editFeatured">
+
+<option value="false">
+Featured: No
+</option>
+
+<option value="true">
+Featured: Yes
+</option>
+
+</select>
+
+<button
+class="save-btn"
+onclick="saveEdit()">
+
+Save Changes
+
+</button>
+
+<br><br>
+
+<button
+class="delete-btn"
+onclick="closeModal()">
+
+Cancel
+
+</button>
+
+</div>
+
+</div>
+
+<!-- FIREBASE -->
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script src="firebase.js"></script>
+
+<script>
+
+let currentEditType = "";
+let currentEditId = "";
+
+let allListings = [];
+
+function showSection(section){
+
+document
+.querySelectorAll(".section")
+.forEach(sec=>sec.classList.remove("active"));
+
+document
+.getElementById(section)
+.classList.add("active");
+
+}function addHotel(){
+
+db.ref("hotels").push({
+
+name: hotelName.value,
+location: hotelLocation.value,
+price: hotelPrice.value,
+description: hotelDescription.value,
+image: hotelImage.value,
+rating: hotelRating.value,
+amenities: hotelAmenities.value,
+featured: hotelFeatured.value==="true"
+
+});
+
+alert("Hotel Added");
+
+hotelName.value="";
+hotelLocation.value="";
+hotelPrice.value="";
+hotelDescription.value="";
+hotelImage.value="";
+hotelRating.value="";
+hotelAmenities.value="";
+
+}
+
+function addHomestay(){
+
+db.ref("homestays").push({
+
+name: homeName.value,
+location: homeLocation.value,
+price: homePrice.value,
+description: homeDescription.value,
+image: homeImage.value,
+rating: homeRating.value,
+amenities: homeAmenities.value,
+featured: homeFeatured.value==="true"
+
+});
+
+alert("Homestay Added");
+
+homeName.value="";
+homeLocation.value="";
+homePrice.value="";
+homeDescription.value="";
+homeImage.value="";
+homeRating.value="";
+homeAmenities.value="";
+
+}
+
+function addPackage(){
+
+db.ref("packages").push({
+
+name: packageName.value,
+location: packageLocation.value,
+price: packagePrice.value,
+description: packageDescription.value,
+image: packageImage.value,
+duration: packageDuration.value,
+highlights: packageHighlights.value,
+featured: packageFeatured.value==="true"
+
+});
+
+alert("Package Added");
+
+packageName.value="";
+packageLocation.value="";
+packagePrice.value="";
+packageDescription.value="";
+packageImage.value="";
+packageDuration.value="";
+packageHighlights.value="";
+
+}
+
+function loadCounters(){
+
+db.ref("hotels").on("value",(snap)=>{
+
+hotelCount.innerText=snap.numChildren();
+
+updateTotal();
+
+});
+
+db.ref("homestays").on("value",(snap)=>{
+
+homestayCount.innerText=snap.numChildren();
+
+updateTotal();
+
+});
+
+db.ref("packages").on("value",(snap)=>{
+
+packageCount.innerText=snap.numChildren();
+
+updateTotal();
+
+});
+
+db.ref("inquiries").on("value",(snap)=>{
+
+leadCount.innerText=snap.numChildren();
+
+});
+
+}
+
+function updateTotal(){
+
+const hotels =
+parseInt(hotelCount.innerText || 0);
+
+const homes =
+parseInt(homestayCount.innerText || 0);
+
+const packages =
+parseInt(packageCount.innerText || 0);
+
+totalCount.innerText =
+hotels + homes + packages;
+
+}
+
+function loadListings(){
+
+allListings=[];
+
+db.ref("hotels").once("value").then((snap)=>{
+
+snap.forEach((child)=>{
+
+allListings.push({
+
+id:child.key,
+type:"hotels",
+...child.val()
+
+});
+
+});
+
+renderManager();
+
+});
+
+db.ref("homestays").once("value").then((snap)=>{
+
+snap.forEach((child)=>{
+
+allListings.push({
+
+id:child.key,
+type:"homestays",
+...child.val()
+
+});
+
+});
+
+renderManager();
+
+});
+
+db.ref("packages").once("value").then((snap)=>{
+
+snap.forEach((child)=>{
+
+allListings.push({
+
+id:child.key,
+type:"packages",
+...child.val()
+
+});
+
+});
+
+renderManager();
+
+});
+
+}function renderManager(){
+
+const search =
+(document.getElementById("searchInput")?.value || "")
+.toLowerCase();
+
+const category =
+document.getElementById("categoryFilter")?.value || "all";
+
+const featured =
+document.getElementById("featuredFilter")?.value || "all";
+
+let html="";
+
+allListings.forEach(item=>{
+
+if(
+search &&
+!(item.name||"").toLowerCase().includes(search) &&
+!(item.location||"").toLowerCase().includes(search)
+){
+return;
+}
+
+if(
+category!=="all" &&
+item.type!==category
+){
+return;
+}
+
+if(
+featured==="featured" &&
+!item.featured
+){
+return;
+}
+
+html += `
+
+<div class="listing">
+
+<h3>${item.name || ""}</h3>
+
+<p>📍 ${item.location || ""}</p>
+
+<p>💰 ₹${item.price || ""}</p>
+
+<p>📂 ${item.type}</p>
+
+${item.featured ?
+'<div class="featured-badge">Featured</div>'
+:
+''
+}
+
+<br><br>
+
+<button
+class="edit-btn"
+onclick="editListing(
+'${item.type}',
+'${item.id}'
+)">
+
+Edit
+
+</button>
+
+<button
+class="delete-btn"
+onclick="deleteListing(
+'${item.type}',
+'${item.id}'
+)">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+listingContainer.innerHTML =
+html || "<h3>No Listings Found</h3>";
+
+}
+
+function editListing(type,id){
+
+const item =
+allListings.find(
+x=>x.type===type && x.id===id
+);
+
+if(!item) return;
+
+currentEditType = type;
+currentEditId = id;
+
+editName.value =
+item.name || "";
+
+editLocation.value =
+item.location || "";
+
+editPrice.value =
+item.price || "";
+
+editDescription.value =
+item.description || "";
+
+editImage.value =
+item.image || "";
+
+if(type==="packages"){
+
+editExtra1.value =
+item.duration || "";
+
+editExtra2.value =
+item.highlights || "";
+
+}else{
+
+editExtra1.value =
+item.rating || "";
+
+editExtra2.value =
+item.amenities || "";
+
+}
+
+editFeatured.value =
+item.featured ? "true" : "false";
+
+editModal.style.display="flex";
+
+}
+
+function saveEdit(){
+
+let payload = {
+
+name: editName.value,
+location: editLocation.value,
+price: editPrice.value,
+description: editDescription.value,
+image: editImage.value,
+featured: editFeatured.value==="true"
+
+};
+
+if(currentEditType==="packages"){
+
+payload.duration =
+editExtra1.value;
+
+payload.highlights =
+editExtra2.value;
+
+}else{
+
+payload.rating =
+editExtra1.value;
+
+payload.amenities =
+editExtra2.value;
+
+}
+
+db.ref(
+currentEditType + "/" + currentEditId
+).update(payload);
+
+alert("Listing Updated");
+
+closeModal();
+
+loadListings();
+
+}
+
+function deleteListing(type,id){
+
+if(
+!confirm("Delete this listing?")
+){
+return;
+}
+
+db.ref(type + "/" + id).remove();
+
+alert("Listing Deleted");
+
+loadListings();
+
+}
+
+function closeModal(){
+
+editModal.style.display="none";
+
+}
+
+function updateLeadStatus(id,status){
+
+db.ref(
+"inquiries/" + id
+).update({
+status:status
+});
+
+}
+
+function renderLeads(){
+
+db.ref("inquiries")
+.once("value")
+.then((snap)=>{
+
+let html="";
+
+const search =
+(document.getElementById("leadSearch")?.value || "")
+.toLowerCase();
+
+const filter =
+(document.getElementById("leadStatusFilter")?.value || "all");
+
+snap.forEach((child)=>{
+
+const d = child.val();
+
+const text = `
+${d.customerName||""}
+${d.phone||""}
+${d.email||""}
+${d.listingName||""}
+`
+.toLowerCase();
+
+if(
+search &&
+!text.includes(search)
+){
+return;
+}
+
+if(
+filter!=="all" &&
+d.status!==filter
+){
+return;
+}
+
+html += `
+
+<div class="listing">
+
+<h3>${d.customerName || ""}</h3>
+
+<p>📞 ${d.phone || ""}</p>
+
+<p>📧 ${d.email || ""}</p>
+
+<p>🏨 ${d.listingName || ""}</p>
+
+<p>📂 ${d.listingType || ""}</p>
+
+<p>👥 Guests: ${d.guests || ""}</p>
+
+<p>📅 ${d.travelDate || ""}</p>
+
+<p>💬 ${d.message || ""}</p>
+
+<select
+onchange="updateLeadStatus(
+'${child.key}',
+this.value
+)">
+
+<option
+value="Pending"
+${d.status==="Pending"?"selected":""}>
+Pending
+</option>
+
+<option
+value="Contacted"
+${d.status==="Contacted"?"selected":""}>
+Contacted
+</option>
+
+<option
+value="Closed"
+${d.status==="Closed"?"selected":""}>
+Closed
+</option>
+
+</select>
+
+</div>
+
+`;
+
+});
+
+leadContainer.innerHTML =
+html || "<h3>No Leads Found</h3>";
+
+});
+
+}
+
+loadCounters();
+
+loadListings();
+
+renderLeads();
+
+db.ref("inquiries")
+.on("value",renderLeads);
+
+db.ref("hotels")
+.on("value",loadListings);
+
+db.ref("homestays")
+.on("value",loadListings);
+
+db.ref("packages")
+.on("value",loadListings);
+
+</script>
+
+</div>
+
+</body>
+</html>
