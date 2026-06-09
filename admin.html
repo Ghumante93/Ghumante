@@ -74,10 +74,6 @@ border-radius:6px;
 cursor:pointer;
 }
 
-.nav button:hover{
-background:#115e59;
-}
-
 .section{
 display:none;
 }
@@ -92,10 +88,6 @@ padding:20px;
 border-radius:10px;
 margin-bottom:20px;
 box-shadow:0 2px 10px rgba(0,0,0,.1);
-}
-
-.card h2{
-margin-bottom:15px;
 }
 
 input,
@@ -116,11 +108,6 @@ color:white;
 border:none;
 border-radius:6px;
 cursor:pointer;
-font-size:16px;
-}
-
-button.save:hover{
-background:#115e59;
 }
 
 .manager-filters{
@@ -161,8 +148,8 @@ display:inline-block;
 background:gold;
 padding:4px 8px;
 border-radius:20px;
-margin-top:8px;
 font-size:12px;
+margin-top:8px;
 }
 
 .modal{
@@ -186,18 +173,6 @@ max-width:650px;
 border-radius:10px;
 max-height:90vh;
 overflow:auto;
-}
-
-@media(max-width:768px){
-
-.manager-filters{
-grid-template-columns:1fr;
-}
-
-.nav{
-flex-direction:column;
-}
-
 }
 
 </style>
@@ -234,30 +209,22 @@ flex-direction:column;
 <p id="totalCount">0</p>
 </div>
 
+<div class="stat-card">
+<h3>Total Leads</h3>
+<p id="leadCount">0</p>
+</div>
+
 </div>
 
 <div class="nav">
 
-<button onclick="showSection('hotels')">
-Hotels
-</button>
+<button onclick="showSection('hotels')">Hotels</button>
+<button onclick="showSection('homestays')">Homestays</button>
+<button onclick="showSection('packages')">Packages</button>
+<button onclick="showSection('manager')">Listings Manager</button>
+<button onclick="showSection('leads')">Leads</button>
 
-<button onclick="showSection('homestays')">
-Homestays
-</button>
-
-<button onclick="showSection('packages')">
-Packages
-</button>
-
-<button onclick="showSection('manager')">
-Listings Manager
-</button>
-
-</div>
-<!-- HOTELS -->
-
-<div id="hotels" class="section active">
+</div><div id="hotels" class="section active">
 
 <div class="card">
 
@@ -266,33 +233,20 @@ Listings Manager
 <input id="hotelName" placeholder="Hotel Name">
 <input id="hotelLocation" placeholder="Location">
 <input id="hotelPrice" placeholder="Price">
-
-<textarea id="hotelDescription"
-placeholder="Description"></textarea>
-
-<input id="hotelImage"
-placeholder="Image URL">
-
-<input id="hotelRating"
-placeholder="Rating (4.8)">
-
-<input id="hotelAmenities"
-placeholder="Amenities (WiFi, Pool, Parking)">
+<textarea id="hotelDescription" placeholder="Description"></textarea>
+<input id="hotelImage" placeholder="Image URL">
+<input id="hotelRating" placeholder="Rating">
+<input id="hotelAmenities" placeholder="Amenities">
 
 <select id="hotelFeatured">
 <option value="false">Featured: No</option>
 <option value="true">Featured: Yes</option>
 </select>
 
-<button class="save" onclick="addHotel()">
-Add Hotel
-</button>
+<button class="save" onclick="addHotel()">Add Hotel</button>
 
 </div>
-
 </div>
-
-<!-- HOMESTAYS -->
 
 <div id="homestays" class="section">
 
@@ -303,33 +257,20 @@ Add Hotel
 <input id="homeName" placeholder="Homestay Name">
 <input id="homeLocation" placeholder="Location">
 <input id="homePrice" placeholder="Price">
-
-<textarea id="homeDescription"
-placeholder="Description"></textarea>
-
-<input id="homeImage"
-placeholder="Image URL">
-
-<input id="homeRating"
-placeholder="Rating">
-
-<input id="homeAmenities"
-placeholder="Amenities">
+<textarea id="homeDescription" placeholder="Description"></textarea>
+<input id="homeImage" placeholder="Image URL">
+<input id="homeRating" placeholder="Rating">
+<input id="homeAmenities" placeholder="Amenities">
 
 <select id="homeFeatured">
 <option value="false">Featured: No</option>
 <option value="true">Featured: Yes</option>
 </select>
 
-<button class="save" onclick="addHomestay()">
-Add Homestay
-</button>
+<button class="save" onclick="addHomestay()">Add Homestay</button>
 
 </div>
-
 </div>
-
-<!-- PACKAGES -->
 
 <div id="packages" class="section">
 
@@ -341,34 +282,22 @@ Add Homestay
 <input id="packageLocation" placeholder="Destination">
 <input id="packagePrice" placeholder="Price">
 
-<textarea id="packageDescription"
-placeholder="Description"></textarea>
+<textarea id="packageDescription" placeholder="Description"></textarea>
 
-<input id="packageImage"
-placeholder="Image URL">
+<input id="packageImage" placeholder="Image URL">
+<input id="packageDuration" placeholder="Duration">
 
-<input id="packageDuration"
-placeholder="Duration (5 Days / 4 Nights)">
-
-<textarea
-id="packageHighlights"
-placeholder="Highlights (one per line)">
-</textarea>
+<textarea id="packageHighlights" placeholder="Highlights"></textarea>
 
 <select id="packageFeatured">
 <option value="false">Featured: No</option>
 <option value="true">Featured: Yes</option>
 </select>
 
-<button class="save" onclick="addPackage()">
-Add Package
-</button>
+<button class="save" onclick="addPackage()">Add Package</button>
 
 </div>
-
 </div>
-
-<!-- LISTINGS MANAGER -->
 
 <div id="manager" class="section">
 
@@ -378,42 +307,55 @@ Add Package
 
 <div class="manager-filters">
 
-<input
-id="searchInput"
-placeholder="Search listings..."
-onkeyup="renderManager()">
+<input id="searchInput" placeholder="Search listings..." onkeyup="renderManager()">
 
-<select
-id="categoryFilter"
-onchange="renderManager()">
-
+<select id="categoryFilter" onchange="renderManager()">
 <option value="all">All Categories</option>
 <option value="hotels">Hotels</option>
 <option value="homestays">Homestays</option>
 <option value="packages">Packages</option>
-
 </select>
 
-<select
-id="featuredFilter"
-onchange="renderManager()">
-
+<select id="featuredFilter" onchange="renderManager()">
 <option value="all">All Listings</option>
 <option value="featured">Featured Only</option>
-
 </select>
 
 </div>
 
-<div id="listingContainer">
-Loading...
+<div id="listingContainer"></div>
+
+</div>
+
+</div><div id="leads" class="section">
+
+<div class="card">
+
+<h2>Lead Management</h2>
+
+<input
+id="leadSearch"
+placeholder="Search customer, phone, listing..."
+onkeyup="renderLeads()">
+
+<select
+id="leadStatusFilter"
+onchange="renderLeads()">
+
+<option value="all">All Status</option>
+<option value="Pending">Pending</option>
+<option value="Contacted">Contacted</option>
+<option value="Closed">Closed</option>
+
+</select>
+
+<div id="leadContainer">
+Loading Leads...
 </div>
 
 </div>
 
 </div>
-
-<!-- EDIT MODAL -->
 
 <div class="modal" id="editModal">
 
@@ -421,43 +363,28 @@ Loading...
 
 <h2>Edit Listing</h2>
 
-<input id="editName" placeholder="Name">
+<input id="editName">
+<input id="editLocation">
+<input id="editPrice">
 
-<input id="editLocation"
-placeholder="Location">
+<textarea id="editDescription"></textarea>
 
-<input id="editPrice"
-placeholder="Price">
-
-<textarea id="editDescription"
-placeholder="Description"></textarea>
-
-<input id="editImage"
-placeholder="Image URL">
+<input id="editImage">
 
 <input id="editExtra1">
 
 <textarea id="editExtra2"></textarea>
 
 <select id="editFeatured">
-
-<option value="false">
-Featured: No
-</option>
-
-<option value="true">
-Featured: Yes
-</option>
-
+<option value="false">Featured: No</option>
+<option value="true">Featured: Yes</option>
 </select>
 
-<button class="save"
-onclick="saveEdit()">
+<button class="save" onclick="saveEdit()">
 Save Changes
 </button>
 
-<button class="delete-btn"
-onclick="closeModal()">
+<button class="delete-btn" onclick="closeModal()">
 Cancel
 </button>
 
@@ -479,398 +406,80 @@ function showSection(section){
 
 document
 .querySelectorAll(".section")
-.forEach(s=>{
-s.classList.remove("active");
-});
+.forEach(s=>s.classList.remove("active"));
 
 document
 .getElementById(section)
 .classList.add("active");
 
-}function addHotel(){
-
-db.ref("hotels").push({
-
-name: hotelName.value,
-location: hotelLocation.value,
-price: hotelPrice.value,
-description: hotelDescription.value,
-image: hotelImage.value,
-rating: hotelRating.value,
-amenities: hotelAmenities.value,
-featured: hotelFeatured.value==="true",
-createdAt: Date.now()
-
+}function updateLeadStatus(id,status){
+db.ref("inquiries/"+id).update({
+status:status
 });
-
-alert("Hotel Added");
-
 }
 
-function addHomestay(){
+function renderLeads(){
 
-db.ref("homestays").push({
-
-name: homeName.value,
-location: homeLocation.value,
-price: homePrice.value,
-description: homeDescription.value,
-image: homeImage.value,
-rating: homeRating.value,
-amenities: homeAmenities.value,
-featured: homeFeatured.value==="true",
-createdAt: Date.now()
-
-});
-
-alert("Homestay Added");
-
-}
-
-function addPackage(){
-
-db.ref("packages").push({
-
-name: packageName.value,
-location: packageLocation.value,
-price: packagePrice.value,
-description: packageDescription.value,
-image: packageImage.value,
-duration: packageDuration.value,
-highlights: packageHighlights.value,
-featured: packageFeatured.value==="true",
-createdAt: Date.now()
-
-});
-
-alert("Package Added");
-
-}
-
-function deleteListing(type,id){
-
-if(!confirm("Delete this listing?")){
-return;
-}
-
-db.ref(type+"/"+id).remove();
-
-}
-
-function openEdit(type,id,data){
-
-currentEditType=type;
-currentEditId=id;
-
-editName.value=data.name || "";
-editLocation.value=data.location || "";
-editPrice.value=data.price || "";
-editDescription.value=data.description || "";
-editImage.value=data.image || "";
-
-editFeatured.value=
-data.featured ? "true":"false";
-
-if(type==="packages"){
-
-editExtra1.placeholder="Duration";
-editExtra2.placeholder="Highlights";
-
-editExtra1.value=data.duration || "";
-editExtra2.value=data.highlights || "";
-
-}else{
-
-editExtra1.placeholder="Rating";
-editExtra2.placeholder="Amenities";
-
-editExtra1.value=data.rating || "";
-editExtra2.value=data.amenities || "";
-
-}
-
-editModal.style.display="flex";
-
-}
-
-function closeModal(){
-
-editModal.style.display="none";
-
-}
-
-function saveEdit(){
-
-let updateData={
-
-name: editName.value,
-location: editLocation.value,
-price: editPrice.value,
-description: editDescription.value,
-image: editImage.value,
-featured: editFeatured.value==="true"
-
-};
-
-if(currentEditType==="packages"){
-
-updateData.duration=editExtra1.value;
-updateData.highlights=editExtra2.value;
-
-}else{
-
-updateData.rating=editExtra1.value;
-updateData.amenities=editExtra2.value;
-
-}
-
-db.ref(
-currentEditType+"/"+currentEditId
-).update(updateData);
-
-alert("Updated Successfully");
-
-closeModal();
-
-}
-
-function renderManager(){
-
-Promise.all([
-
-db.ref("hotels").once("value"),
-db.ref("homestays").once("value"),
-db.ref("packages").once("value")
-
-]).then(([hotelsSnap,homesSnap,packagesSnap])=>{
+db.ref("inquiries").once("value").then((snap)=>{
 
 let html="";
+let total=0;
 
 const search=
-(searchInput?.value || "")
+(document.getElementById("leadSearch")?.value||"")
 .toLowerCase();
 
-const category=
-categoryFilter?.value || "all";
+const filter=
+(document.getElementById("leadStatusFilter")?.value||"all");
 
-const featured=
-featuredFilter?.value || "all";
+snap.forEach(child=>{
 
-function allowed(type,d){
+total++;
+
+const d=child.val();
 
 const text=
-`${d.name||""} ${d.location||""}`
+`${d.customerName||""}
+${d.phone||""}
+${d.listingName||""}`
 .toLowerCase();
 
-if(search && !text.includes(search)){
-return false;
-}
+if(search && !text.includes(search)) return;
 
-if(category!=="all" &&
-category!==type){
-return false;
-}
-
-if(
-featured==="featured" &&
-!d.featured
-){
-return false;
-}
-
-return true;
-
-}
-
-let hotelsCount=0;
-let homesCount=0;
-let packagesCount=0;
-
-html+="<h3>HOTELS</h3>";
-
-hotelsSnap.forEach(child=>{
-
-hotelsCount++;
-
-const d=child.val();
-
-if(!allowed("hotels",d)) return;
+if(filter!=="all" && d.status!==filter) return;
 
 html+=`
-
 <div class="listing">
 
-<h4>${d.name||""}</h4>
+<h4>${d.customerName||""}</h4>
 
-<p>📍 ${d.location||""}</p>
+<p>📞 ${d.phone||""}</p>
+<p>📧 ${d.email||""}</p>
+<p>🏨 ${d.listingName||""}</p>
+<p>📂 ${d.listingType||""}</p>
+<p>📅 ${d.travelDate||""}</p>
 
-<p>💰 ₹${d.price||""}</p>
+<select onchange="updateLeadStatus('${child.key}',this.value)">
+<option value="Pending" ${d.status==="Pending"?"selected":""}>Pending</option>
+<option value="Contacted" ${d.status==="Contacted"?"selected":""}>Contacted</option>
+<option value="Closed" ${d.status==="Closed"?"selected":""}>Closed</option>
+</select>
 
-<p>⭐ ${d.rating||"N/A"}</p>
-
-${
-d.featured
-? '<div class="featured-badge">Featured</div>'
-: ''
-}
-
-<br><br>
-
-<button
-class="edit-btn"
-onclick='openEdit(
-"hotels",
-"${child.key}",
-${JSON.stringify(d)}
-)'>
-Edit
-</button>
-
-<button
-class="delete-btn"
-onclick="deleteListing(
-'hotels',
-'${child.key}'
-)">
-Delete
-</button>
-
-</div>
-
-`;
-
+</div>`;
 });
 
-html+="<h3>HOMESTAYS</h3>";
+leadContainer.innerHTML=
+html || "<h3>No Leads Found</h3>";
 
-homesSnap.forEach(child=>{
-
-homesCount++;
-
-const d=child.val();
-
-if(!allowed("homestays",d)) return;
-
-html+=`
-
-<div class="listing">
-
-<h4>${d.name||""}</h4>
-
-<p>📍 ${d.location||""}</p>
-
-<p>💰 ₹${d.price||""}</p>
-
-<p>⭐ ${d.rating||"N/A"}</p>
-
-${
-d.featured
-? '<div class="featured-badge">Featured</div>'
-: ''
-}
-
-<br><br>
-
-<button
-class="edit-btn"
-onclick='openEdit(
-"homestays",
-"${child.key}",
-${JSON.stringify(d)}
-)'>
-Edit
-</button>
-
-<button
-class="delete-btn"
-onclick="deleteListing(
-'homestays',
-'${child.key}'
-)">
-Delete
-</button>
-
-</div>
-
-`;
+leadCount.innerText=total;
 
 });
-
-html+="<h3>PACKAGES</h3>";
-
-packagesSnap.forEach(child=>{
-
-packagesCount++;
-
-const d=child.val();
-
-if(!allowed("packages",d)) return;
-
-html+=`
-
-<div class="listing">
-
-<h4>${d.name||""}</h4>
-
-<p>📍 ${d.location||""}</p>
-
-<p>💰 ₹${d.price||""}</p>
-
-<p>🗓 ${d.duration||""}</p>
-
-${
-d.featured
-? '<div class="featured-badge">Featured</div>'
-: ''
 }
 
-<br><br>
+renderLeads();
 
-<button
-class="edit-btn"
-onclick='openEdit(
-"packages",
-"${child.key}",
-${JSON.stringify(d)}
-)'>
-Edit
-</button>
-
-<button
-class="delete-btn"
-onclick="deleteListing(
-'packages',
-'${child.key}'
-)">
-Delete
-</button>
-
-</div>
-
-`;
-
-});
-
-listingContainer.innerHTML=html;
-
-hotelCount.innerText=hotelsCount;
-homestayCount.innerText=homesCount;
-packageCount.innerText=packagesCount;
-
-totalCount.innerText=
-hotelsCount+
-homesCount+
-packagesCount;
-
-});
-
-}
-
-db.ref("hotels").on("value",renderManager);
-db.ref("homestays").on("value",renderManager);
-db.ref("packages").on("value",renderManager);
-
-renderManager();
+db.ref("inquiries")
+.on("value",renderLeads);
 
 </script>
 
